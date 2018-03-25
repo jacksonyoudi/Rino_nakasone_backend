@@ -16,6 +16,5 @@ class Book(models.Model):
     create_edit = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        abstract = True
         managed = False
         db_table = "ireadweek"

@@ -1,40 +1,35 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from bs4 import BeautifulSoup
-from RinoNakasone.settings import DOMAIN, CDN
 from urllib.parse import urljoin
-from RinoNakasone.items import IreadweekItem
+from bs4 import BeautifulSoup
+from RinoNakasone.settings import PIAOHUA
 
 
-class IreadweekSpider(scrapy.Spider):
-    name = 'ireadweek'
-    allowed_domains = ['www.ireadweek.com']
-    start_urls = ['http://www.ireadweek.com/']
+class PiaohuaSpider(scrapy.Spider):
+    name = 'piaohua'
+    allowed_domains = ['www.piaohua.com']
+    start_urls = ['http://www.piaohua.com/']
 
     def parse(self, response):
-        # response._declared_encoding = 'utf-8'
-        # response._encoding = 'utf-8'
         html_doc = response.body
         soup = BeautifulSoup(html_doc, 'html.parser')
 
-        # names = soup.find_all('div', class_="hanghang-list-name")
-        # hrefs = [i.parent.parent.attrs.get('href') for i in names]
+        for i in soup.find_all('a', class_="img"):
+            if i.attrs.get('href'):
+                url = i.attrs.get('href')
+                full_url = urljoin(PIAOHUA, url)
+                yield scrapy.Request(full_url, callback=self.parse_detail)
 
-        for i in soup.find_all('div', class_="hanghang-list-name"):
-            if i.parent.parent.attrs.get('href'):
-                url = i.parent.parent.attrs.get('href')
-                full_url = urljoin(DOMAIN, url)
-                yield scrapy.Request(full_url, callback=self.parse_news)
-
-        next_url = urljoin(DOMAIN, soup.find_all('a')[-2].attrs.get('href'))
+        next_url = urljoin(response.url.split('list_')[0],
+                           soup.find('div', class_='page tk').find_all('a')[-2].attrs.get('href'))
         yield scrapy.Request(next_url, callback=self.parse)
 
-    def parse_news(self, response):
+    def parse_detail(self, response):
         item = IreadweekItem()
         html_doc = response.body
         soup = BeautifulSoup(html_doc, 'html.parser')
 
-        img_url = urljoin(CDN, soup.find('img').attrs.get('src').replace('//','/'))
+        img_url = urljoin(CDN, soup.find('img').attrs.get('src').replace('//', '/'))
         download_url = soup.find('a', class_='downloads').attrs.get('href')
         title = soup.find_all('div', class_='hanghang-za-title')
         name = title[0].text
