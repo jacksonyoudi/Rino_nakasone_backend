@@ -33,8 +33,8 @@ def list_books(request):
     where = request.GET.dict()
 
     # 每页的数据
-    limit = where.get('n', 20)
-    offset = (where.get('p', 1) - 1) * limit
+    limit = int(where.get('n', 20))
+    offset = (int(where.get('p', 1)) - 1) * limit
 
     if where.get('p'):
         del where['p']
