@@ -34,7 +34,9 @@ class IreadweekSpider(scrapy.Spider):
         html_doc = response.body
         soup = BeautifulSoup(html_doc, 'html.parser')
 
-        img_url = urljoin(CDN, soup.find('img').attrs.get('src').replace('//','/'))
+        img_url = urljoin(CDN, soup.find('img').attrs.get('src').replace('//', '/'))
+
+
         download_url = soup.find('a', class_='downloads').attrs.get('href')
         title = soup.find_all('div', class_='hanghang-za-title')
         name = title[0].text

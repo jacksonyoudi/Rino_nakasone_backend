@@ -16,7 +16,7 @@ class RinonakasonePipeline(object):
         book.author = item.get('author')
         book.category = item.get('category')
         book.score = item.get('score')
-        book.image_url = item.get('image_url')
+        book.img_url = item.get('img_url')
         book.download_url = item.get('download_url')
         book.introduction = item.get('introduction')
         book.author_info = item.get('author_info')
