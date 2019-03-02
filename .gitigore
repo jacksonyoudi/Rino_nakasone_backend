@@ -2,4 +2,5 @@
 .idea/*
 *.pyc
 settings.py
+*/.DS_Store/*_
 

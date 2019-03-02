@@ -43,3 +43,12 @@ def list_books(request):
 
     data = get_books(where, limit, offset)
     return HttpJSONResponse({'c': '1', 'd': data})
+
+
+def index(request):
+    """
+
+    :param request:
+    :return:
+    """
+    return render(request, 'ireadweek/index.html')

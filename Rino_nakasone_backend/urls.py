@@ -18,7 +18,8 @@ from django.urls import path
 from django.conf.urls import include, url
 
 urlpatterns = [
-    url(r'^api/ireadweek/', include('ireadweek.urls')),
+    # url(r'^api/ireadweek/', include('ireadweek.urls')),
     path('admin/', admin.site.urls),
+    path('', include('ireadweek.urls')),
 
 ]

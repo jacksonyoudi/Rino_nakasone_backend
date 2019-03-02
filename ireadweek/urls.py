@@ -3,4 +3,5 @@ from . import views
 
 urlpatterns = [
     url(r'^list/$', views.list_books),
+    url(r'^$', views.index),
 ]

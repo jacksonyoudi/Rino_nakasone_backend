@@ -25,3 +25,11 @@ class IreadweekItem(scrapy.Item):
     author_info = scrapy.Field()
     directory = scrapy.Field()
     create_edit = scrapy.Field()
+
+
+class MeiZiTuItem(scrapy.Item):
+    title = scrapy.Field()
+    name = scrapy.Field()
+    path = scrapy.Field()
+    img_url = scrapy.Field()
+    referer = scrapy.Field()
